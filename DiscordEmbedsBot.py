@@ -3,15 +3,16 @@ import re
 import discord
 import requests
 import tweepy
+import configparser
 from bs4 import BeautifulSoup
 
-### .env Secrets
-# Discord
-DISCORD_TOKEN = os.environ['DISCORD_TOKEN']
-# Twitter
-TWITTER_API_KEY = os.environ['TWITTER_API_KEY']
-TWITTER_API_SECRET = os.environ['TWITTER_API_SECRET']
-TWITTER_BEARER_TOKEN = os.environ['TWITTER_BEARER_TOKEN']
+### Config
+config = configparser.ConfigParser(interpolation=None)
+config.read('config.txt')
+DISCORD_TOKEN = config['DISCORD']['DISCORD_TOKEN']
+TWITTER_API_KEY = config['TWITTER']['TWITTER_API_KEY']
+TWITTER_API_SECRET = config['TWITTER']['TWITTER_API_SECRET']
+TWITTER_BEARER_TOKEN = config['TWITTER']['TWITTER_BEARER_TOKEN']
 
 ### Inits
 # Discord
@@ -43,9 +44,10 @@ async def on_message(message):
             # Parse the HTML and extract the video link
             soup = BeautifulSoup(html, 'html.parser')
             video_element = soup.find('video')
-            print(video_element)
+            print("Found VideoElement: " + video_element)
             if video_element and 'data-src' in video_element.attrs:
                 video_link = video_element['data-src']
+                print("Sending video url: " + video_link)
                 await message.channel.send(video_link)
 
     # Message contains an Twitter link
@@ -77,8 +79,7 @@ async def on_message(message):
                     # Check if the media entity is a video
                     if 'video_info' in media:
                         video_url = media['video_info']['variants'][0]['url']
-                        print(f'Video url: {video_url}')
-                        print("Sending video.")
+                        print("Sending video url: " + video_url)
                         await message.channel.send(video_url)
 
             except tweepy.errors.NotFound:
