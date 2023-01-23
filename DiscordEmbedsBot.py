@@ -44,7 +44,7 @@ async def on_message(message):
             # Parse the HTML and extract the video link
             soup = BeautifulSoup(html, 'html.parser')
             video_element = soup.find('video')
-            print("Found VideoElement: " + video_element)
+            print("Found VideoElement.")
             if video_element and 'data-src' in video_element.attrs:
                 video_link = video_element['data-src']
                 print("Sending video url: " + video_link)
