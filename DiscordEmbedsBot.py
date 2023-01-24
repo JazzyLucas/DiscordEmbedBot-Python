@@ -13,6 +13,7 @@ DISCORD_TOKEN = config['DISCORD']['DISCORD_TOKEN']
 TWITTER_API_KEY = config['TWITTER']['TWITTER_API_KEY']
 TWITTER_API_SECRET = config['TWITTER']['TWITTER_API_SECRET']
 TWITTER_BEARER_TOKEN = config['TWITTER']['TWITTER_BEARER_TOKEN']
+INSTAGRAM_APP_SECRET = config['INSTAGRAM']['INSTAGRAM_APP_SECRET']
 
 ### Inits
 # Discord
@@ -84,6 +85,24 @@ async def on_message(message):
 
             except tweepy.errors.NotFound:
                 print("404 Tweet not found.")
+
+    # Message contains an Twitter link
+    if 'instagram.com/' in message.content:
+
+        # Extract the link  from the message
+        url = None
+        words = message.content.split()
+        for word in words:
+            if word.startswith('https://twitter.com/'):
+                url = word
+                break
+
+        if url:
+            print("TODO: Instagram")
+            # Authenticate with the Instagram API
+            # TODO
+            # Get the tweet
+            # TODO
 
 
 client.run(DISCORD_TOKEN)
