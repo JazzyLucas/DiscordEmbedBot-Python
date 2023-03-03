@@ -24,6 +24,7 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_message(message):
+    channel = message.channel
     
     #iFunny
     if 'ifunny.co/' in message.content:
@@ -53,8 +54,12 @@ async def on_message(message):
                 video_link = video_element['data-src']
                 send_message += "\nVideo Link: " + video_link + ""
 
-            await message.channel.send(send_message)
-            await message.delete()
+            # Clean up and send the message.
+            try:
+                await message.delete()
+            except:
+                send_message += "\n Could not delete old message, plz give perms."
+            await channel.send(send_message)
 
     # Twitter
     if 'twitter.com/' in message.content:
@@ -90,8 +95,13 @@ async def on_message(message):
             except tweepy.errors.NotFound:
                 send_message += "404 Tweet not found."
 
-            await message.channel.send(send_message)
-            await message.delete()
+            # Clean up and send the message.
+            try:
+                await message.delete()
+            except:
+                send_message += "\n Could not delete old message, plz give perms."
+            await channel.send(send_message)
+
 
     # Instagram
     if 'instagram.com/' in message.content:
