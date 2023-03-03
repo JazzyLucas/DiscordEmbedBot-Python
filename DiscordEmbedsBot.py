@@ -1,4 +1,3 @@
-import os
 import re
 import discord
 import requests
@@ -9,11 +8,23 @@ from bs4 import BeautifulSoup
 ### Config
 config = configparser.ConfigParser(interpolation=None)
 config.read('config.txt')
-DISCORD_TOKEN = config['DISCORD']['DISCORD_TOKEN']
-TWITTER_API_KEY = config['TWITTER']['TWITTER_API_KEY']
-TWITTER_API_SECRET = config['TWITTER']['TWITTER_API_SECRET']
-TWITTER_BEARER_TOKEN = config['TWITTER']['TWITTER_BEARER_TOKEN']
-INSTAGRAM_APP_SECRET = config['INSTAGRAM']['INSTAGRAM_APP_SECRET']
+if config.has_option('DISCORD', 'DISCORD_TOKEN'):
+    DISCORD_TOKEN = config['DISCORD']['DISCORD_TOKEN']
+    print('Discord token received.')
+else:
+    print('Discord token not provided.')
+if config.has_section('TWITTER'):
+    TWITTER_API_KEY = config['TWITTER']['TWITTER_API_KEY']
+    TWITTER_API_SECRET = config['TWITTER']['TWITTER_API_SECRET']
+    TWITTER_BEARER_TOKEN = config['TWITTER']['TWITTER_BEARER_TOKEN']
+    print('Twitter section received.')
+else:
+    print('Twitter section not provided.')
+if config.has_section('INSTAGRAM'):
+    INSTAGRAM_APP_SECRET = config['INSTAGRAM']['INSTAGRAM_APP_SECRET']
+    print('Instagram section received.')
+else:
+    print('Instagram section not provided.')
 
 ### Inits
 # Discord
