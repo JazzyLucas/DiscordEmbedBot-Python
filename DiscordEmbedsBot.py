@@ -24,8 +24,7 @@ client = discord.Client(intents=intents)
 
 @client.event
 async def on_message(message):
-    # Check if the message contains an iFunny link
-
+    
     #iFunny
     if 'ifunny.co/' in message.content:
         send_message = ":slight_smile: iFunny link from: " + message.author.mention + " :slight_smile:"
