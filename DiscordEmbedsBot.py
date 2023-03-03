@@ -49,7 +49,6 @@ async def on_message(message):
             # Parse the HTML and extract the video link
             soup = BeautifulSoup(html, 'html.parser')
             video_element = soup.find('video')
-            print(video_element)
             if video_element and 'data-src' in video_element.attrs:
                 video_link = video_element['data-src']
                 send_message += "\nVideo Link: " + video_link + ""
@@ -110,7 +109,7 @@ async def on_message(message):
         url = None
         words = message.content.split()
         for word in words:
-            if word.startswith('https://twitter.com/'):
+            if word.startswith('https://instagram.com/'):
                 url = word
                 break
 
